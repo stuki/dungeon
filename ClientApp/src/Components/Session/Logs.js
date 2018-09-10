@@ -9,7 +9,7 @@ import {
   InputGroup
 } from "react-bootstrap";
 import PropTypes from "prop-types";
-import Api from "./Api";
+import Api from "../../Helpers/Api";
 import "./Logs.css";
 
 class Logs extends Component {

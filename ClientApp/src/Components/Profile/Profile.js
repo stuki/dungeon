@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "react-bootstrap";
 import { connect } from "react-redux";
-import { updateUser } from "./Actions/UserActions";
+import { updateUser } from "../../Actions/UserActions";
 import SessionList from "./SessionList";
-import NavigationBar from "./NavigationBar";
-import Login from "./Login";
+import NavigationBar from "../Common/NavigationBar";
+import Login from "../Common/Login";
 
-class ProfilePage extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ class ProfilePage extends Component {
   }
 }
 
-ProfilePage.propTypes = {
+Profile.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string
@@ -63,4 +63,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(ProfilePage);
+)(Profile);

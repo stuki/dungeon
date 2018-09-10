@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import MDSpinner from "react-md-spinner";
-import { updateUser } from "./Actions/UserActions";
-import NavigationBar from "./NavigationBar";
+import { updateUser } from "../../Actions/UserActions";
+import NavigationBar from "../Common/NavigationBar";
 import CreateCharacter from "./CreateCharacter";
 import CreateSession from "./CreateSession";
 import LogList from "./LogList";
-import Api from "./Api";
+import Api from "../../Helpers/Api";
 import ModifyCharacter from "./ModifyCharacter";
-import Login from "./Login";
+import Login from "../Common/Login";
 import Password from "./Password";
 import Settings from "./Settings";
 import Moves from "./Moves";
 import "./SessionPage.css";
 
-class SessionPage extends Component {
+class Session extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +58,7 @@ class SessionPage extends Component {
   };
 
   handleLogout = () => {
-    const { onUpdateUser, match, user } = this.props;
+    const { onUpdateUser, match } = this.props;
     onUpdateUser(null);
     this.setState({
       sessionId: match.params.sessionId,
@@ -154,7 +154,7 @@ class SessionPage extends Component {
   }
 }
 
-SessionPage.propTypes = {
+Session.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       sessionId: PropTypes.node
@@ -167,7 +167,7 @@ SessionPage.propTypes = {
   onUpdateUser: PropTypes.func.isRequired
 };
 
-SessionPage.defaultProps = {
+Session.defaultProps = {
   user: null
 };
 
@@ -182,4 +182,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(SessionPage);
+)(Session);

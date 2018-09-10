@@ -4,7 +4,7 @@ import { PanelGroup, Badge } from "react-bootstrap";
 import MDSpinner from "react-md-spinner";
 import Logs from "./Logs";
 import CreateLog from "./CreateLog";
-import Api from "./Api";
+import Api from "../../Helpers/Api";
 
 class LogList extends Component {
   constructor(props) {

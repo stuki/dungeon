@@ -10,8 +10,8 @@ import {
   HelpBlock,
   Button
 } from "react-bootstrap";
-import { updateUser } from "./Actions/UserActions";
-import Api from "./Api";
+import { updateUser } from "../../Actions/UserActions";
+import Api from "../../Helpers/Api";
 import "./Login.css";
 
 class Login extends Component {

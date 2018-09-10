@@ -20,28 +20,28 @@ namespace dungeon.Controllers
             _context = context;
         }
 
+        #if DEBUG
+
         // GET: api/Players
         [HttpGet]
         public IEnumerable<Player> GetPlayers()
         {
             return _context.Players;
         }
+        
+        #endif
 
 		// GET: api/Players/name
 		[HttpGet("{name}")]
 		public async Task<IActionResult> GetPlayer([FromRoute] string name)
 		{
 			if (!ModelState.IsValid)
-			{
 				return BadRequest(ModelState);
-			}
 
 			var player = await _context.Players.SingleOrDefaultAsync(n => n.Name == name);
 
 			if (player == null)
-			{
 				return NotFound();
-			}
 
 			return Ok(player);
 		}
@@ -51,16 +51,12 @@ namespace dungeon.Controllers
 		public async Task<IActionResult> GetPlayer([FromRoute] int id)
 		{
 			if (!ModelState.IsValid)
-			{
 				return BadRequest(ModelState);
-			}
 
 			var player = await _context.Players.FindAsync(id);
 
 			if (player == null)
-			{
 				return NotFound();
-			}
 
 			return Ok(player);
 		}
@@ -70,14 +66,11 @@ namespace dungeon.Controllers
         public async Task<IActionResult> PutPlayer([FromRoute] int id, [FromBody] Player player)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             if (id != player.Id)
-            {
                 return BadRequest();
-            }
+                
 
             _context.Entry(player).State = EntityState.Modified;
 
@@ -105,9 +98,7 @@ namespace dungeon.Controllers
         public async Task<IActionResult> PostPlayer([FromBody] Player player)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
@@ -120,15 +111,12 @@ namespace dungeon.Controllers
         public async Task<IActionResult> DeletePlayer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var player = await _context.Players.FindAsync(id);
+            
             if (player == null)
-            {
                 return NotFound();
-            }
 
             _context.Players.Remove(player);
             await _context.SaveChangesAsync();

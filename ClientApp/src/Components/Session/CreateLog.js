@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Api from "./Api";
-import "./CreateLog.css";
 import {
   FormGroup,
   FormControl,
@@ -10,6 +8,8 @@ import {
   Button,
   Form
 } from "react-bootstrap";
+import Api from "../../Helpers/Api";
+import "./CreateLog.css";
 
 class CreateLog extends Component {
   constructor(props) {

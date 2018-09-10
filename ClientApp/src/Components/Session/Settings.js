@@ -10,8 +10,8 @@ import {
   Glyphicon
 } from "react-bootstrap";
 import MDSpinner from "react-md-spinner";
-import FieldGroup from "./FieldGroup";
-import Api from "./Api";
+import FieldGroup from "../Common/FieldGroup";
+import Api from "../../Helpers/Api";
 import "./Settings.css";
 
 class Settings extends Component {
@@ -152,9 +152,7 @@ class Settings extends Component {
               <ListGroup>{players}</ListGroup>
             </FormGroup>
             <Button type="submit">Update Session</Button>
-            <Button bsStyle="danger" onClick={this.deleteSession}>
-              Delete Session
-            </Button>
+            <Button bsStyle="danger" onClick={this.deleteSession}>Delete Session</Button>
           </form>
         </div>
       );
