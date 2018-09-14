@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dungeon;
 
 namespace dungeon.Migrations
 {
     [DbContext(typeof(DungeonContext))]
-    partial class DungeonContextModelSnapshot : ModelSnapshot
+    [Migration("20180914152745_AddCharacterClasses")]
+    partial class AddCharacterClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace dungeon.Migrations
 
                     b.Property<string>("Bonds");
 
-                    b.Property<int?>("CharacterClassId");
+                    b.Property<int>("CharacterClassId");
 
                     b.Property<int>("Charisma");
 
@@ -55,13 +57,15 @@ namespace dungeon.Migrations
 
                     b.Property<string>("Moves");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("PlayerId");
 
                     b.Property<string>("Race");
 
-                    b.Property<string>("SessionId");
+                    b.Property<string>("SessionId")
+                        .IsRequired();
 
                     b.Property<string>("Spells");
 
@@ -121,13 +125,16 @@ namespace dungeon.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Label")
+                        .IsRequired();
 
                     b.Property<int>("PlayerId");
 
-                    b.Property<string>("SessionId");
+                    b.Property<string>("SessionId")
+                        .IsRequired();
 
-                    b.Property<string>("Tag");
+                    b.Property<string>("Text")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -173,7 +180,8 @@ namespace dungeon.Migrations
 
                     b.Property<int>("DungeonMasterId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<string>("Password");
 
@@ -186,18 +194,21 @@ namespace dungeon.Migrations
                 {
                     b.HasOne("dungeon.CharacterClass", "CharacterClass")
                         .WithMany()
-                        .HasForeignKey("CharacterClassId");
+                        .HasForeignKey("CharacterClassId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("dungeon.Session", "Session")
                         .WithMany("Characters")
-                        .HasForeignKey("SessionId");
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("dungeon.Log", b =>
                 {
                     b.HasOne("dungeon.Session", "Session")
                         .WithMany("Logs")
-                        .HasForeignKey("SessionId");
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("dungeon.PlayerSession", b =>

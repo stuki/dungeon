@@ -13,11 +13,8 @@ namespace dungeon
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
         public DateTime CreatedAt { get; set; }
-        [Required]
         public int CreatorId { get; set; }
-        [Required]
         public int DungeonMasterId { get; set; }
-        [Required]
         public string Name { get; set; }
         public string Password { get; set; }
         public ICollection<Log> Logs { get; set; }

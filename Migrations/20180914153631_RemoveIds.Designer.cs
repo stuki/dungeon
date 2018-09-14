@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dungeon;
 
 namespace dungeon.Migrations
 {
     [DbContext(typeof(DungeonContext))]
-    partial class DungeonContextModelSnapshot : ModelSnapshot
+    [Migration("20180914153631_RemoveIds")]
+    partial class RemoveIds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,8 @@ namespace dungeon.Migrations
 
                     b.Property<string>("Moves");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("PlayerId");
 
@@ -121,13 +124,16 @@ namespace dungeon.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("Message");
+                    b.Property<string>("Message")
+                        .IsRequired();
 
                     b.Property<int>("PlayerId");
 
-                    b.Property<string>("SessionId");
+                    b.Property<string>("SessionId")
+                        .IsRequired();
 
-                    b.Property<string>("Tag");
+                    b.Property<string>("Tag")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -197,7 +203,8 @@ namespace dungeon.Migrations
                 {
                     b.HasOne("dungeon.Session", "Session")
                         .WithMany("Logs")
-                        .HasForeignKey("SessionId");
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("dungeon.PlayerSession", b =>

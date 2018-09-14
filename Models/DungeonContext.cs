@@ -16,6 +16,7 @@ namespace dungeon
         public DbSet<Session> Sessions { get; set; }
         public DbSet<PlayerSession> PlayerSessions { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<CharacterClass> CharacterClasses { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

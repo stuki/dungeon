@@ -33,7 +33,7 @@ namespace dungeon.Controllers
 
         #endif
 
-        // GET: api/Sessions/playerid/5
+        // GET: api/Sessions/playerid
         [HttpGet("playerid/{id}")]
         public ActionResult<IEnumerable<Session>> GetSessions([FromRoute] int id)
         {
@@ -59,7 +59,7 @@ namespace dungeon.Controllers
 
             session.PlayerSessions = _context.Sessions.Where(p => p.Id == id).SelectMany(p => p.PlayerSessions).Include("Player").ToList();
 
-            session.Characters = _context.Characters.Where(c => c.SessionId == session.Id).ToList();
+            session.Characters = _context.Characters.Where(c => c.Session.Id == session.Id).ToList();
 
             if (session == null)
                 return NotFound();
@@ -147,7 +147,7 @@ namespace dungeon.Controllers
         }
 
         // DELETE: api/Sessions/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/delete")]
         public async Task<IActionResult> DeleteSession([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -180,7 +180,7 @@ namespace dungeon.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var character = await _context.Characters.SingleOrDefaultAsync(c => c.PlayerId == playerId && c.SessionId == sessionId);
+            var character = await _context.Characters.SingleOrDefaultAsync(c => c.PlayerId == playerId && c.Session.Id == sessionId);
 
             if (character == null)
                 return NotFound();
@@ -195,7 +195,7 @@ namespace dungeon.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (sessionId != character.SessionId && playerId != character.PlayerId)
+            if (sessionId != character.Session.Id && playerId != character.PlayerId)
                 return BadRequest();
 
             _context.Entry(character).State = EntityState.Modified;
@@ -266,7 +266,7 @@ namespace dungeon.Controllers
 
             var log = await _context.Logs.ToListAsync();
 
-            log = log.Where(_ => _.SessionId == id).ToList();
+            log = log.Where(_ => _.Session.Id == id).ToList();
 
             if (log == null)
                 return NotFound();
@@ -278,7 +278,7 @@ namespace dungeon.Controllers
         [HttpPut("{sessionId}/Logs/{id}")]
         public async Task<IActionResult> PutLog([FromRoute] int id, [FromBody] Log log, string sessionId)
         {
-            if (!ModelState.IsValid && log.SessionId != sessionId)
+            if (!ModelState.IsValid && log.Session.Id != sessionId)
                 return BadRequest(ModelState);
 
             if (id != log.Id)
@@ -305,23 +305,23 @@ namespace dungeon.Controllers
             return NoContent();
         }
 
-        // POST: api/Sessions/:sessionId/Logs
+        // POST: api/Sessions/:sessionId/Logs/create
         [HttpPost("{sessionId}/Logs/create")]
         public async Task<IActionResult> PostLog([FromBody] Log log, [FromRoute] string sessionId)
         {
-            if (!ModelState.IsValid && log.SessionId != sessionId)
+            if (!ModelState.IsValid && log.Session.Id != sessionId)
                 return BadRequest(ModelState);
             
 
             log.CreatedAt = DateTime.Now;
 
-            _context.Logs.Add(log);
+            _context.Sessions.Find(sessionId).Logs.Add(log);
             await _context.SaveChangesAsync();
 
             return Ok(log);
         }
 
-        // DELETE: api/Sessions/:sessionId/Logs/5
+        // DELETE: api/Sessions/:sessionId/Logs/5/delete
         [HttpDelete("{sessionId}/Logs/{id}/delete")]
         public async Task<IActionResult> DeleteLog([FromRoute] int id)
         {

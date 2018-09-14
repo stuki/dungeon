@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace dungeon
 {
@@ -8,14 +7,10 @@ namespace dungeon
     public class Log
     {
         public int Id { get; set; }
-        [Required]
-        public string SessionId { get; set; }
         public Session Session { get; set; }
         public int PlayerId { get; set; }
         public DateTime CreatedAt { get; set; }
-        [Required]
-        public string Text { get; set; }
-        [Required]
-        public string Label { get; set; }
+        public string Message { get; set; }
+        public string Tag { get; set; }
     }
 }

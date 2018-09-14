@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dungeon;
 
 namespace dungeon.Migrations
 {
     [DbContext(typeof(DungeonContext))]
-    partial class DungeonContextModelSnapshot : ModelSnapshot
+    [Migration("20180914171418_RemoveRequired")]
+    partial class RemoveRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
