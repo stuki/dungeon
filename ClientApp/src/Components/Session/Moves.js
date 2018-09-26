@@ -1,7 +1,7 @@
 import React from "react";
 import { Panel, ListGroup, ListGroupItem, Tabs, Tab } from "react-bootstrap";
 import Masonry from "react-masonry-component";
-import MovesData from "../../Helpers/Moves.json";
+import MovesData from "../../Common/moves.json";
 import "./Moves.css";
 
 const masonryOptions = {

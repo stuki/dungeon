@@ -259,19 +259,20 @@ namespace dungeon.Controllers
         #region Logs
         // GET: api/Sessions/:sessionId/Logs/:id
         [HttpGet("{sessionId}/Logs/")]
-        public async Task<ActionResult<List<Log>>> GetLog([FromRoute] string id)
+        public async Task<ActionResult<List<Log>>> GetLog([FromRoute] string sessionId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var log = await _context.Logs.ToListAsync();
+            var logs = await _context.Logs
+                .Include(l => l.Session)
+                .Where(l => l.Session.Id == sessionId)
+                .ToListAsync();
 
-            log = log.Where(_ => _.Session.Id == id).ToList();
-
-            if (log == null)
+            if (logs == null)
                 return NotFound();
 
-            return Ok(log);
+            return Ok(logs);
         }
 
         // PUT: api/Sessions/:sessionId/Logs/5
@@ -314,8 +315,8 @@ namespace dungeon.Controllers
             
 
             log.CreatedAt = DateTime.Now;
-
-            _context.Sessions.Find(sessionId).Logs.Add(log);
+            var session = _context.Sessions.Include(s => s.Logs).Single(s => s.Id == sessionId);
+            session.Logs.Add(log);
             await _context.SaveChangesAsync();
 
             return Ok(log);

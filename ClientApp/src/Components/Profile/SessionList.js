@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Session from "./Session";
-import Api from "../../Helpers/Api";
+import Api from "../../Common/Api";
 import "./SessionList.css";
-import NameGen from "../../Helpers/NameGen.json";
+import NameGen from "../../Common/nameGen.json";
 
 class SessionList extends Component {
   constructor(props) {

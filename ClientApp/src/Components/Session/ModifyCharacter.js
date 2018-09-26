@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FormGroup, Form, Button } from "react-bootstrap";
-import Api from "../../Helpers/Api";
+import Api from "../../Common/Api";
 import "./ModifyCharacter.css";
 import FieldGroup from "../Common/FieldGroup";
 
@@ -105,7 +105,9 @@ class ModifyCharacter extends Component {
           <Form onSubmit={this.handleSubmit}>
             {properties}
             <FormGroup controlId="submit">
-              <Button type="submit" bsStyle="primary">Update</Button>
+              <Button type="submit" bsStyle="primary">
+                Update
+              </Button>
             </FormGroup>
           </Form>
         )}

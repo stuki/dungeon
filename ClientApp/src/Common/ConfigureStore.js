@@ -1,21 +1,14 @@
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
-
-import { reducer as toastrReducer } from "react-redux-toastr";
 import storage from "redux-persist/lib/storage";
-import UserReducer from "./Reducers/UserReducers";
+import rootReducer from "./Reducers";
 
 const persistConfig = {
   key: "root",
   storage
 };
 
-const allReducers = combineReducers({
-  user: UserReducer,
-  toastr: toastrReducer
-});
-
-const persistedReducer = persistReducer(persistConfig, allReducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(
   persistedReducer,

@@ -9,10 +9,10 @@ import {
   InputGroup
 } from "react-bootstrap";
 import PropTypes from "prop-types";
-import Api from "../../Helpers/Api";
-import "./Logs.css";
+import Api from "../../../Common/Api";
+import "./Log.css";
 
-class Logs extends Component {
+class Log extends Component {
   constructor(props) {
     super(props);
     const { log } = props;
@@ -42,11 +42,11 @@ class Logs extends Component {
   };
 
   handleChange = e => {
-    this.setState({ text: e.target.value });
+    this.setState({ message: e.target.value });
   };
 
   render() {
-    const { text, label, edit } = this.state;
+    const { message, tag, edit } = this.state;
     const { filter } = this.props;
     if (edit) {
       return (
@@ -54,7 +54,7 @@ class Logs extends Component {
           <Panel.Body>
             <FormGroup>
               <InputGroup>
-                <FormControl value={text} onChange={this.handleChange} />
+                <FormControl value={message} onChange={this.handleChange} />
                 <InputGroup.Button>
                   <Button onClick={this.handleSubmit}>Done</Button>
                 </InputGroup.Button>
@@ -62,7 +62,7 @@ class Logs extends Component {
             </FormGroup>
           </Panel.Body>
           <Panel.Footer>
-            <Badge>{label}</Badge>
+            <Badge>{tag}</Badge>
           </Panel.Footer>
         </Panel>
       );
@@ -70,18 +70,18 @@ class Logs extends Component {
     return (
       <Panel>
         <Panel.Body>
-          {text}
+          {message}
           <Glyphicon glyph="pencil" onClick={this.toggleEditState} />
         </Panel.Body>
         <Panel.Footer>
-          <Badge onClick={() => filter(label)}>{label}</Badge>
+          <Badge onClick={() => filter(tag)}>{tag}</Badge>
         </Panel.Footer>
       </Panel>
     );
   }
 }
 
-Logs.propTypes = {
+Log.propTypes = {
   log: PropTypes.shape({
     text: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
@@ -90,4 +90,4 @@ Logs.propTypes = {
   filter: PropTypes.func.isRequired
 };
 
-export default Logs;
+export default Log;

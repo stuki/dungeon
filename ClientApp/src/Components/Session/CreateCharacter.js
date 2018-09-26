@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, Col, Button } from "react-bootstrap";
-import Api from "../../Helpers/Api";
+import Api from "../../Common/Api";
 import FieldGroup from "../Common/FieldGroup";
 import "./CreateCharacter.css";
 

@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import ReduxToastr from "react-redux-toastr";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import { store, persistor } from "./ConfigureStore";
+import { store, persistor } from "./Common/ConfigureStore";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 
 ReactDOM.render(

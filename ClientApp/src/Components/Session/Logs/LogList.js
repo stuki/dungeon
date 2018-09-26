@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { PanelGroup, Badge } from "react-bootstrap";
 import MDSpinner from "react-md-spinner";
-import Logs from "./Logs";
+import Log from "./Log";
 import CreateLog from "./CreateLog";
-import Api from "../../Helpers/Api";
+import Api from "../../../Common/Api";
 
 class LogList extends Component {
   constructor(props) {
@@ -54,11 +54,9 @@ class LogList extends Component {
     if (filter) {
       logs = logs
         .filter(l => l.label === filter)
-        .map(l => <Logs log={l} key={l.id} filter={this.filterLogs} />);
+        .map(l => <Log log={l} key={l.id} filter={this.filterLogs} />);
     } else {
-      logs = logs.map(l => (
-        <Logs log={l} key={l.id} filter={this.filterLogs} />
-      ));
+      logs = logs.map(l => <Log log={l} key={l.id} filter={this.filterLogs} />);
     }
 
     if (isLoading) {

@@ -10,15 +10,24 @@ import {
   HelpBlock,
   Button
 } from "react-bootstrap";
-import { updateUser } from "../../Actions/UserActions";
-import Api from "../../Helpers/Api";
+import { WebAuth } from "auth0-js";
+import { updateUser } from "../../Common/Actions/userActions";
+import Api from "../../Common/Api";
 import "./Login.css";
+
+const auth0 = new WebAuth({
+  domain: "dungeon.eu.auth0.com",
+  clientID: 'XwWlfFY1kpgSi8e14bZKIDI18rIVXLRT',
+  redirectUri: "https://localhost:5001/",
+  responseType: 'token'
+});
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: null,
+      name: "",
+      email: "",
       register: false,
       isLoading: false
     };
@@ -32,24 +41,32 @@ class Login extends Component {
   }
 
   handleChange = e => {
-    this.setState({ name: e.target.value });
+    this.setState({ email: e.target.value });
   };
 
   login = async e => {
     e.preventDefault();
 
-    const { name } = this.state;
-    const { handleLogin } = this.props;
+    const { email } = this.state;
 
-    if (name) {
-      const player = await Api.getPlayer(name);
-      if (player !== undefined) {
-        this.onUpdateUser(player);
-        setTimeout(() => handleLogin(), 500);
-      } else {
-        this.setState({ register: true });
-      }
-    }
+    auth0.passwordlessStart({
+      connection: 'email',
+      email: email,
+      redirectUri: 'https://localhost:5001/account/',
+      send: 'link'
+    }, (err, res) => console.log(err, res));
+
+    // const { handleLogin } = this.props;
+
+    // if (name) {
+    //   const player = await Api.getPlayer(name);
+    //   if (player !== undefined) {
+    //     this.onUpdateUser(player);
+    //     setTimeout(() => handleLogin(), 500);
+    //   } else {
+    //     this.setState({ register: true });
+    //   }
+    // }
   };
 
   register = async e => {
@@ -64,7 +81,7 @@ class Login extends Component {
   };
 
   render() {
-    const { register, name } = this.state;
+    const { register, email, name } = this.state;
     const { isLoading } = this.state;
 
     if (isLoading) {
@@ -87,7 +104,7 @@ class Login extends Component {
               id="name"
               type="text"
               label="Username"
-              value={name}
+              value={email}
               onChange={this.handleChange}
               bsSize="large"
             />

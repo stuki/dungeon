@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "react-bootstrap";
 import { connect } from "react-redux";
-import { updateUser } from "../../Actions/UserActions";
+import { loginUser } from "../../Common/Actions/userActions";
 import SessionList from "./SessionList";
 import NavigationBar from "../Common/NavigationBar";
 import Login from "../Common/Login";

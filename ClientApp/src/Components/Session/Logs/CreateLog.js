@@ -4,19 +4,20 @@ import { connect } from "react-redux";
 import {
   FormGroup,
   FormControl,
-  ControlLabel,
   Button,
-  Form
+  Form,
+  InputGroup,
+  Glyphicon
 } from "react-bootstrap";
-import Api from "../../Helpers/Api";
+import Api from "../../../Common/Api";
 import "./CreateLog.css";
 
 class CreateLog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      label: "",
-      text: "",
+      tag: "",
+      message: "",
       sessionId: props.sessionId,
       playerId: props.user.id
     };
@@ -40,36 +41,29 @@ class CreateLog extends Component {
   }
 
   render() {
-    const { label, text } = this.state;
+    const { text } = this.state;
 
     return (
       <div>
         <div className="createLog">
           <Form inline onSubmit={this.handleSubmit}>
-            <FormGroup controlId="formInlineLabel">
-              <ControlLabel>Log Label</ControlLabel>
-              <FormControl
-                id="newLabel"
-                type="text"
-                value={label}
-                placeholder="Write a log label"
-                onChange={this.handleChange("label")}
-              />
-            </FormGroup>
             <FormGroup controlId="formInlineLogText">
-              <ControlLabel>Log text</ControlLabel>
-              <FormControl
-                id="newLogText"
-                type="text"
-                value={text}
-                autoComplete={false}
-                placeholder="Write a log text"
-                onChange={this.handleChange("text")}
-              />
+              <InputGroup>
+                <FormControl
+                  id="newLogText"
+                  type="text"
+                  value={text}
+                  autoComplete="off"
+                  placeholder="Write a log text"
+                  onChange={this.handleChange("text")}
+                />
+                <InputGroup.Button>
+                  <Button type="submit">
+                    <Glyphicon glyph="send" />
+                  </Button>
+                </InputGroup.Button>
+              </InputGroup>
             </FormGroup>
-            <Button type="submit" bsStyle="primary">
-              Add
-            </Button>
           </Form>
         </div>
       </div>
