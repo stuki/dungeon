@@ -8,26 +8,27 @@ namespace dungeon.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Advancedmoves",
-                table: "Characters");
+                "Advancedmoves",
+                "Characters");
 
             migrationBuilder.RenameColumn(
-                name: "Startingmoves",
-                table: "Characters",
-                newName: "Moves");
+                "Startingmoves",
+                "Characters",
+                "Moves");
 
             migrationBuilder.AddColumn<int>(
-                name: "CharacterClassId",
-                table: "Characters",
+                "CharacterClassId",
+                "Characters",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.CreateTable(
-                name: "CharacterClasses",
-                columns: table => new
+                "CharacterClasses",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     ClassName = table.Column<string>(nullable: true),
                     Attributes = table.Column<string>(nullable: true),
                     HPCalc = table.Column<int>(nullable: false),
@@ -40,21 +41,18 @@ namespace dungeon.Migrations
                     Advancedmoves = table.Column<string>(nullable: true),
                     SpellList = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CharacterClasses", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_CharacterClasses", x => x.Id); });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Characters_CharacterClassId",
-                table: "Characters",
-                column: "CharacterClassId");
+                "IX_Characters_CharacterClassId",
+                "Characters",
+                "CharacterClassId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Characters_CharacterClasses_CharacterClassId",
-                table: "Characters",
-                column: "CharacterClassId",
-                principalTable: "CharacterClasses",
+                "FK_Characters_CharacterClasses_CharacterClassId",
+                "Characters",
+                "CharacterClassId",
+                "CharacterClasses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -62,28 +60,28 @@ namespace dungeon.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Characters_CharacterClasses_CharacterClassId",
-                table: "Characters");
+                "FK_Characters_CharacterClasses_CharacterClassId",
+                "Characters");
 
             migrationBuilder.DropTable(
-                name: "CharacterClasses");
+                "CharacterClasses");
 
             migrationBuilder.DropIndex(
-                name: "IX_Characters_CharacterClassId",
-                table: "Characters");
+                "IX_Characters_CharacterClassId",
+                "Characters");
 
             migrationBuilder.DropColumn(
-                name: "CharacterClassId",
-                table: "Characters");
+                "CharacterClassId",
+                "Characters");
 
             migrationBuilder.RenameColumn(
-                name: "Moves",
-                table: "Characters",
-                newName: "Startingmoves");
+                "Moves",
+                "Characters",
+                "Startingmoves");
 
             migrationBuilder.AddColumn<string>(
-                name: "Advancedmoves",
-                table: "Characters",
+                "Advancedmoves",
+                "Characters",
                 nullable: true);
         }
     }

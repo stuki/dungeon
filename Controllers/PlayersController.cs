@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using dungeon.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using dungeon;
 
 namespace dungeon.Controllers
 {
@@ -20,7 +18,7 @@ namespace dungeon.Controllers
             _context = context;
         }
 
-        #if DEBUG
+#if DEBUG
 
         // GET: api/Players
         [HttpGet]
@@ -28,41 +26,41 @@ namespace dungeon.Controllers
         {
             return _context.Players;
         }
-        
-        #endif
 
-		// GET: api/Players/name
-		[HttpGet("{name}")]
-		public async Task<IActionResult> GetPlayer([FromRoute] string name)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
+#endif
 
-			var player = await _context.Players.SingleOrDefaultAsync(n => n.Name == name);
+        // GET: api/Players/name
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetPlayer([FromRoute] string name)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-			if (player == null)
-				return NotFound();
+            var player = await _context.Players.SingleOrDefaultAsync(n => n.Name == name);
 
-			return Ok(player);
-		}
+            if (player == null)
+                return NotFound();
 
-		// GET: api/Players/5
-		[HttpGet("{id:int}")]
-		public async Task<IActionResult> GetPlayer([FromRoute] int id)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
+            return Ok(player);
+        }
 
-			var player = await _context.Players.FindAsync(id);
+        // GET: api/Players/5
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetPlayer([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-			if (player == null)
-				return NotFound();
+            var player = await _context.Players.FindAsync(id);
 
-			return Ok(player);
-		}
+            if (player == null)
+                return NotFound();
 
-		// PUT: api/Players/5
-		[HttpPut("{id}")]
+            return Ok(player);
+        }
+
+        // PUT: api/Players/5
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutPlayer([FromRoute] int id, [FromBody] Player player)
         {
             if (!ModelState.IsValid)
@@ -70,7 +68,7 @@ namespace dungeon.Controllers
 
             if (id != player.Id)
                 return BadRequest();
-                
+
 
             _context.Entry(player).State = EntityState.Modified;
 
@@ -81,13 +79,8 @@ namespace dungeon.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!PlayerExists(id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -114,7 +107,7 @@ namespace dungeon.Controllers
                 return BadRequest(ModelState);
 
             var player = await _context.Players.FindAsync(id);
-            
+
             if (player == null)
                 return NotFound();
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dungeon
+namespace dungeon.Models
 {
     // Log can contain either history, actions, points of interest,
     // messages, player joins

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using dungeon.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using dungeon;
 
 namespace dungeon.Controllers
 {
@@ -22,7 +21,7 @@ namespace dungeon.Controllers
 
         #region Session
 
-        #if DEBUG
+#if DEBUG
 
         // GET: api/Sessions
         [HttpGet]
@@ -31,7 +30,7 @@ namespace dungeon.Controllers
             return _context.Sessions;
         }
 
-        #endif
+#endif
 
         // GET: api/Sessions/playerid
         [HttpGet("playerid/{id}")]
@@ -40,10 +39,8 @@ namespace dungeon.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var session = _context.Players.Where(p => p.Id == id).SelectMany(p => p.PlayerSessions).Select(ps => ps.Session);
-
-            if (session == null)
-                return NotFound();
+            var session = _context.Players.Where(p => p.Id == id).SelectMany(p => p.PlayerSessions)
+                .Select(ps => ps.Session);
 
             return Ok(session);
         }
@@ -57,12 +54,10 @@ namespace dungeon.Controllers
 
             var session = await _context.Sessions.FindAsync(id);
 
-            session.PlayerSessions = _context.Sessions.Where(p => p.Id == id).SelectMany(p => p.PlayerSessions).Include("Player").ToList();
+            session.PlayerSessions = _context.Sessions.Where(p => p.Id == id).SelectMany(p => p.PlayerSessions)
+                .Include("Player").ToList();
 
             session.Characters = _context.Characters.Where(c => c.Session.Id == session.Id).ToList();
-
-            if (session == null)
-                return NotFound();
 
             return Ok(session);
         }
@@ -86,13 +81,8 @@ namespace dungeon.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!SessionExists(id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -105,8 +95,8 @@ namespace dungeon.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Random rnd = new Random();
-            string code = rnd.Next(0, 9999).ToString().PadLeft(4, '0');
+            var rnd = new Random();
+            var code = rnd.Next(0, 9999).ToString().PadLeft(4, '0');
 
             session.CreatedAt = DateTime.Now;
             session.DungeonMasterId = session.CreatorId;
@@ -114,7 +104,8 @@ namespace dungeon.Controllers
 
             _context.Sessions.Add(session);
 
-            PlayerSession playerSession = new PlayerSession(){ 
+            var playerSession = new PlayerSession
+            {
                 PlayerId = session.CreatorId,
                 SessionId = session.Id
             };
@@ -132,8 +123,8 @@ namespace dungeon.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
-            PlayerSession playerSession = new PlayerSession()
+
+            var playerSession = new PlayerSession
             {
                 PlayerId = player.Id,
                 SessionId = id
@@ -157,7 +148,7 @@ namespace dungeon.Controllers
 
             if (session == null)
                 return NotFound();
-                
+
             _context.Sessions.Remove(session);
             await _context.SaveChangesAsync();
 
@@ -180,7 +171,9 @@ namespace dungeon.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var character = await _context.Characters.SingleOrDefaultAsync(c => c.PlayerId == playerId && c.Session.Id == sessionId);
+            var character =
+                await _context.Characters.SingleOrDefaultAsync(c =>
+                    c.PlayerId == playerId && c.Session.Id == sessionId);
 
             if (character == null)
                 return NotFound();
@@ -190,7 +183,8 @@ namespace dungeon.Controllers
 
         // PUT: api/Sessions/:sessionId/Characters/:playerId
         [HttpPut("{sessionId}/Characters/{playerId:int}")]
-        public async Task<IActionResult> PutCharacter([FromRoute] string sessionId, int playerId, [FromBody] Character character)
+        public async Task<IActionResult> PutCharacter([FromRoute] string sessionId, int playerId,
+            [FromBody] Character character)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -207,13 +201,8 @@ namespace dungeon.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!CharacterExists(character.Id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -257,6 +246,7 @@ namespace dungeon.Controllers
         #endregion
 
         #region Logs
+
         // GET: api/Sessions/:sessionId/Logs/:id
         [HttpGet("{sessionId}/Logs/")]
         public async Task<ActionResult<List<Log>>> GetLog([FromRoute] string sessionId)
@@ -294,13 +284,8 @@ namespace dungeon.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!LogExists(id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -312,7 +297,7 @@ namespace dungeon.Controllers
         {
             if (!ModelState.IsValid && log.Session.Id != sessionId)
                 return BadRequest(ModelState);
-            
+
 
             log.CreatedAt = DateTime.Now;
             var session = _context.Sessions.Include(s => s.Logs).Single(s => s.Id == sessionId);
@@ -343,6 +328,7 @@ namespace dungeon.Controllers
         {
             return _context.Logs.Any(e => e.Id == id);
         }
+
         #endregion
     }
 }

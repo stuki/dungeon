@@ -9,21 +9,19 @@ namespace dungeon.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Players",
-                columns: table => new
+                "Players",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Players", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Players", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Sessions",
-                columns: table => new
+                "Sessions",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -32,17 +30,15 @@ namespace dungeon.Migrations
                     Name = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Sessions", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Characters",
-                columns: table => new
+                "Characters",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     SessionId = table.Column<string>(nullable: false),
                     PlayerId = table.Column<int>(nullable: false),
@@ -71,19 +67,20 @@ namespace dungeon.Migrations
                 {
                     table.PrimaryKey("PK_Characters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Characters_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id",
+                        "FK_Characters_Sessions_SessionId",
+                        x => x.SessionId,
+                        "Sessions",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Logs",
-                columns: table => new
+                "Logs",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     SessionId = table.Column<string>(nullable: false),
                     PlayerId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -94,69 +91,69 @@ namespace dungeon.Migrations
                 {
                     table.PrimaryKey("PK_Logs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Logs_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id",
+                        "FK_Logs_Sessions_SessionId",
+                        x => x.SessionId,
+                        "Sessions",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlayerSessions",
-                columns: table => new
+                "PlayerSessions",
+                table => new
                 {
                     PlayerId = table.Column<int>(nullable: false),
                     SessionId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerSessions", x => new { x.PlayerId, x.SessionId });
+                    table.PrimaryKey("PK_PlayerSessions", x => new {x.PlayerId, x.SessionId});
                     table.ForeignKey(
-                        name: "FK_PlayerSessions_Players_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Players",
-                        principalColumn: "Id",
+                        "FK_PlayerSessions_Players_PlayerId",
+                        x => x.PlayerId,
+                        "Players",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PlayerSessions_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id",
+                        "FK_PlayerSessions_Sessions_SessionId",
+                        x => x.SessionId,
+                        "Sessions",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Characters_SessionId",
-                table: "Characters",
-                column: "SessionId");
+                "IX_Characters_SessionId",
+                "Characters",
+                "SessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Logs_SessionId",
-                table: "Logs",
-                column: "SessionId");
+                "IX_Logs_SessionId",
+                "Logs",
+                "SessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerSessions_SessionId",
-                table: "PlayerSessions",
-                column: "SessionId");
+                "IX_PlayerSessions_SessionId",
+                "PlayerSessions",
+                "SessionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Characters");
+                "Characters");
 
             migrationBuilder.DropTable(
-                name: "Logs");
+                "Logs");
 
             migrationBuilder.DropTable(
-                name: "PlayerSessions");
+                "PlayerSessions");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                "Players");
 
             migrationBuilder.DropTable(
-                name: "Sessions");
+                "Sessions");
         }
     }
 }

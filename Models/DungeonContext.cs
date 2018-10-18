@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Configuration;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace dungeon
+namespace dungeon.Models
 {
     public class DungeonContext : DbContext
     {
-        public DungeonContext(DbContextOptions<DungeonContext> options) : base(options) { }
+        public DungeonContext(DbContextOptions options) : base(options)
+        {
+        }
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Session> Sessions { get; set; }
@@ -22,7 +18,7 @@ namespace dungeon
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlayerSession>()
-                .HasKey(ps => new { ps.PlayerId, ps.SessionId });
+                .HasKey(ps => new {ps.PlayerId, ps.SessionId});
 
             modelBuilder.Entity<PlayerSession>()
                 .HasOne(ps => ps.Player)
@@ -44,4 +40,3 @@ namespace dungeon
         }
     }
 }
-    

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace dungeon
+namespace dungeon.Models
 {
     // The player is either the DM or any other actor in the session
     public class Player
     {
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+
+        [Required] public string Name { get; set; }
+
         public ICollection<PlayerSession> PlayerSessions { get; set; }
     }
 }

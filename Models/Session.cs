@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace dungeon
+namespace dungeon.Models
 {
     // Each group of people playing Dungeon World is a session,
     // in which there are logs and players. The player who creates
@@ -12,6 +11,7 @@ namespace dungeon
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public int CreatorId { get; set; }
         public int DungeonMasterId { get; set; }

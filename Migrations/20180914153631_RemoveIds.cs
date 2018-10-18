@@ -7,54 +7,54 @@ namespace dungeon.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Characters_CharacterClasses_CharacterClassId",
-                table: "Characters");
+                "FK_Characters_CharacterClasses_CharacterClassId",
+                "Characters");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Characters_Sessions_SessionId",
-                table: "Characters");
+                "FK_Characters_Sessions_SessionId",
+                "Characters");
 
             migrationBuilder.RenameColumn(
-                name: "Text",
-                table: "Logs",
-                newName: "Tag");
+                "Text",
+                "Logs",
+                "Tag");
 
             migrationBuilder.RenameColumn(
-                name: "Label",
-                table: "Logs",
-                newName: "Message");
+                "Label",
+                "Logs",
+                "Message");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Sessions",
+                "Name",
+                "Sessions",
                 nullable: true,
                 oldClrType: typeof(string));
 
             migrationBuilder.AlterColumn<string>(
-                name: "SessionId",
-                table: "Characters",
+                "SessionId",
+                "Characters",
                 nullable: true,
                 oldClrType: typeof(string));
 
             migrationBuilder.AlterColumn<int>(
-                name: "CharacterClassId",
-                table: "Characters",
+                "CharacterClassId",
+                "Characters",
                 nullable: true,
                 oldClrType: typeof(int));
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Characters_CharacterClasses_CharacterClassId",
-                table: "Characters",
-                column: "CharacterClassId",
-                principalTable: "CharacterClasses",
+                "FK_Characters_CharacterClasses_CharacterClassId",
+                "Characters",
+                "CharacterClassId",
+                "CharacterClasses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Characters_Sessions_SessionId",
-                table: "Characters",
-                column: "SessionId",
-                principalTable: "Sessions",
+                "FK_Characters_Sessions_SessionId",
+                "Characters",
+                "SessionId",
+                "Sessions",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -62,57 +62,57 @@ namespace dungeon.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Characters_CharacterClasses_CharacterClassId",
-                table: "Characters");
+                "FK_Characters_CharacterClasses_CharacterClassId",
+                "Characters");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Characters_Sessions_SessionId",
-                table: "Characters");
+                "FK_Characters_Sessions_SessionId",
+                "Characters");
 
             migrationBuilder.RenameColumn(
-                name: "Tag",
-                table: "Logs",
-                newName: "Text");
+                "Tag",
+                "Logs",
+                "Text");
 
             migrationBuilder.RenameColumn(
-                name: "Message",
-                table: "Logs",
-                newName: "Label");
+                "Message",
+                "Logs",
+                "Label");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Sessions",
+                "Name",
+                "Sessions",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "SessionId",
-                table: "Characters",
+                "SessionId",
+                "Characters",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
-                name: "CharacterClassId",
-                table: "Characters",
+                "CharacterClassId",
+                "Characters",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Characters_CharacterClasses_CharacterClassId",
-                table: "Characters",
-                column: "CharacterClassId",
-                principalTable: "CharacterClasses",
+                "FK_Characters_CharacterClasses_CharacterClassId",
+                "Characters",
+                "CharacterClassId",
+                "CharacterClasses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Characters_Sessions_SessionId",
-                table: "Characters",
-                column: "SessionId",
-                principalTable: "Sessions",
+                "FK_Characters_Sessions_SessionId",
+                "Characters",
+                "SessionId",
+                "Sessions",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
